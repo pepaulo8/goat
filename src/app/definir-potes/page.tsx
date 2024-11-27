@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function DefinirPotes() {
   const router = useRouter();
-  const [racha, setRacha] = useState(null);
   const [potes, setPotes] = useState<{pote: number, jogadores: []}[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [jogadores, setJogadores] = useState<any[]>([]);
@@ -15,7 +15,6 @@ export default function DefinirPotes() {
       router.push('/criar-racha');
       return;
     }
-    setRacha(rachaData);
     const numPotes = rachaData.jogadoresPorTime;
     setPotes(Array.from({ length: numPotes }, (_, i) => ({ pote: i + 1, jogadores: [] })));
     setJogadores(
@@ -27,13 +26,14 @@ export default function DefinirPotes() {
     );
   }, [router]);
 
-  const handleChange = (id, value) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (id: any, value: string) => {
     setJogadores((prev) =>
       prev.map((jogador) => (jogador.id === id ? { ...jogador, name: value } : jogador))
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     const groupedPotes = potes.map((pote) => ({
       pote: pote.pote,
